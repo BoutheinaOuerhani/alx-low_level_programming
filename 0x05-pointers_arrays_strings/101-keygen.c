@@ -1,24 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
-/**
- * main - generates keygen.
- * Return: 0
- */
+
 int main(void)
 {
-	int i = 0, j = 0;
-	time_t t;
+	unsigned int sum = 0;
+	char alphanum[]  = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+						"abcdefghijklmnopqrstuvwxyz";
+	char pass[30];
+	int i;
 
-	srand((unsigned int) time(&t));
-	while (j < 2772)
+	srand(time(0));
+
+	for (i = 0; sum < (2772 - 'z' - 1); i++)
 	{
-		i = rand() % 128;
-		if ((j + i) > 2772)
-			break;
-		j += i;
-		printf("%c", i);
+		pass[i] = alphanum[rand() % 61];
+		sum += pass[i];
 	}
-	printf("%c\n", (2772 - j));
+
+	pass[i] = (2772 - sum);
+	pass[i+1] = '\0';
+
+	printf("%s\n", pass);
+
 	return (0);
 }
