@@ -1,72 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include "main.h"
 
 /**
- * _isnumber - checks if string is a number
- * @s: string
- *
- * Return: On success 1.
- * If not a number, 0 is returned.
- */
-int _isnumber(char *s)
-{
-	int i, check, d;
-
-	i = 0, d = 0, check = 1;
-	if (*s == '-')
-		i++;
-	for (; *(s + i) != 0; i++)
-	{
-		d = isdigit(*(s + i));
-		if (d == 0)
-		{
-			check = 0;
-			break;
-		}
-	}
-	return (check);
-}
-/**
- * main - Entry point
- *
- * @argc: Counts the number of parameters that go into main
- * @argv: Pointer of array of pointers containing strings entering main
- * Return: Always 0 (Success)
+ * main - prints the min number of coins to make change
+ * for an amount of money
+ * @argc: argument count
+ * @argv: arguments
+ * Return: 0
  */
 int main(int argc, char **argv)
 {
-	int j, ex, coins, cents, d;
-	int c[5] = {25, 10, 5, 2, 1};
+	int total, count;
+	unsigned int i;
+	char *p;
+	int cents[] = {25, 10, 5, 2};
 
-	ex = 1, j = 0, coins = 0;
-	if (argc == 2)
+	if (argc != 2)
 	{
-		if (_isnumber(argv[1]))
+		printf("Error\n");
+		return (1);
+	}
+
+	total = strtol(argv[1], &p, 10);
+	count = 0;
+
+	if (!*p)
+	{
+		while (total > 1)
 		{
-			ex = 0, cents = atoi(argv[1]);
-			if (cents >= 0)
+			for (i = 0; i < sizeof(cents[i]); i++)
 			{
-				while (cents != 0)
+				if (total >= cents[i])
 				{
-					d = cents / c[j];
-					if (d == 0)
-					{
-						j++;
-					}
-					else
-					{
-						coins += d;
-						cents -= (d * c[j]);
-					}
+					count += total / cents[i];
+					total = total % cents[i];
 				}
 			}
 		}
+		if (total == 1)
+			count++;
 	}
-	if (ex == 0)
-		printf("%i\n", coins);
 	else
-		printf("%s\n", "Error");
-	return (ex);
+	{
+		printf("Error\n");
+		return (1);
+	}
+
+	printf("%d\n", count);
+	return (0);
 }

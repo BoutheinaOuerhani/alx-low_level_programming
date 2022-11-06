@@ -1,27 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+
 /**
- * main - Entry point
+ * main - multiplies two numbers.
+ * @argc: argument count
+ * @argv: arguments
  *
- * @argc: Counts the number of parameters that go into main
- * @argv: Pointer of array of pointers containing strings entering main
- * Return: Always 0 (Success)
+ * Return: 0
  */
 int main(int argc, char **argv)
 {
-	int n, ex;
+	int x, y;
 
-	ex = 0;
-	if (argc != 3)
+	if (argc < 3)
 	{
-		printf("%s\n", "Error");
-		ex = 1;
+		printf("Error\n");
+		return (1);
 	}
-	else
-	{
-		n = atoi(argv[1]) * atoi(argv[2]);
-		printf("%i\n", n);
-	}
-	return (ex);
+
+	x = atoi(argv[1]);
+	y = atoi(argv[2]);
+	printf("%d\n", x * y);
+
+	return (0);
 }
